@@ -1,7 +1,25 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <span>Remaining Card Pairs: {{remainingCardPairs}}</span><span class="example-spacer"></span><span>{{doneMoves}}: Done
-            Moves
+  <mat-toolbar-row>
+
+    <a mat-button routerLink="/home" routerLinkActive="active-link">Accueil</a>
+    <a mat-button routerLink="/game" routerLinkActive="active-link">Jouer</a>
+    <a mat-button routerLink="/profile" routerLinkActive="active-link">Profil</a>
+
+    <span class="example-spacer"></span>
+
+    @if (isOnGamePage) {
+      <ng-container>
+        <span>Remaining Card Pairs: {{ remainingCardPairs$ | async }}</span>
+        
+        <span style="margin-left: 20px;">
+          {{ doneMoves$ | async }}: Done Moves
         </span>
-    </mat-toolbar-row>
+
+        <button mat-icon-button (click)="resetGame()" aria-label="Reset Game">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </ng-container>
+    }
+
+  </mat-toolbar-row>
 </mat-toolbar>
