@@ -3,6 +3,7 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,9 +15,10 @@ import { MatButtonModule } from '@angular/material/button';
       
       <a mat-button routerLink="/memory" routerLinkActive="active">Jeu de Mémoire</a>
       <a mat-button routerLink="/blagues" routerLinkActive="active">Blagues</a>
+      <a mat-button routerLink="/tictactoe" routerLinkActive="active">Morpion</a>
     </mat-toolbar>
 
-    <div style="padding: 20px;">
+    <div> 
       <router-outlet></router-outlet>
     </div>
   `,

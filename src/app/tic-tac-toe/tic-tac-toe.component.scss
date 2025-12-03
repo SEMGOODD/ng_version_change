@@ -1,0 +1,66 @@
+.game-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.game-card {
+  padding: 2rem;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.scores {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  font-weight: bold;
+  
+  span {
+    padding: 5px 10px;
+    border-radius: 4px;
+    &.active {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+  }
+}
+
+.status-bar {
+  height: 40px;
+  margin-bottom: 20px;
+  .winner-text { color: #2e7d32; font-size: 1.2rem; }
+  .draw-text { color: #f57c00; font-size: 1.2rem; }
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cell {
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 8px;
+  height: 80px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: #e0e0e0;
+  }
+
+  &.x-mark { color: #1976d2; }
+  &.o-mark { color: #d32f2f; }
+}

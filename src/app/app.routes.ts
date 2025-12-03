@@ -28,6 +28,11 @@ export const routes: Routes = [
     loadComponent: () => import('src/app/blagues/components/joke-list/joke-list')
       .then(m => m.JokeListComponent)
   },
+  
+  { 
+    path: 'tictactoe', 
+    loadComponent: () => import('./tic-tac-toe/tic-tac-toe.component').then(m => m.TicTacToeComponent) 
+  },
 
   { path: '**', redirectTo: 'memory' }
 ];

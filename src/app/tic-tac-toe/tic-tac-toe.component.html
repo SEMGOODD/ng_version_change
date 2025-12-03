@@ -1,0 +1,40 @@
+<div class="game-container">
+  <mat-card class="game-card">
+    <div class="header">
+      <h2>Morpion</h2>
+      <div class="scores">
+        <span [class.active]="currentPlayer === 'X'">Joueur X : {{ xScore }}</span>
+        <span [class.active]="currentPlayer === 'O'">Joueur O : {{ oScore }}</span>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      @if (winner) {
+        <h3 class="winner-text">Le joueur {{ winner }} a gagné ! 🎉</h3>
+      } @else if (isDraw) {
+        <h3 class="draw-text">Match Nul ! 🤝</h3>
+      } @else {
+        <p>Au tour de : <strong>{{ currentPlayer }}</strong></p>
+      }
+    </div>
+
+    <div class="board">
+      @for (cell of board; track $index) {
+        <button 
+          class="cell" 
+          [class.x-mark]="cell === 'X'" 
+          [class.o-mark]="cell === 'O'"
+          (click)="makeMove($index)" 
+          [disabled]="cell !== '' || winner !== null">
+          {{ cell }}
+        </button>
+      }
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="resetGame()">
+        <mat-icon>refresh</mat-icon> Recommencer
+      </button>
+    </div>
+  </mat-card>
+</div>
