@@ -1,0 +1,125 @@
+<div class="container">
+
+  <header class="top-header">
+    <h1>Chuck Norris Facts</h1>
+    
+    <div class="user-bar">
+      @if (isLoggedIn$ | async) {
+        <div class="user-profile">
+          <img [src]="(currentUser$ | async)?.avatar" class="avatar" alt="User Avatar">
+          <span>Welcome, <strong>{{ (currentUser$ | async)?.username }}</strong>!</span>
+          <button (click)="onLogout()" class="btn-small">Logout</button>
+        </div>
+      } @else {
+        <div class="login-form">
+          <input type="text" placeholder="Username..." [(ngModel)]="usernameInput">
+          <button (click)="onLogin()">Login</button>
+        </div>
+      }
+    </div>
+  </header>
+
+  <section class="controls-panel">
+    <div class="actions">
+      <div class="search-box">
+        <input 
+          type="text" 
+          placeholder="Search a joke..." 
+          [(ngModel)]="searchTerm"
+          (keyup.enter)="onSearch()"
+        >
+        <button (click)="onSearch()">🔍</button>
+      </div>
+
+      <select (change)="onCategoryChange($event)" [(ngModel)]="selectedCategory">
+        <option value="" disabled selected>Filter by type</option>
+        @for (cat of categories; track cat) {
+          <option [value]="cat">{{ cat | titlecase }}</option>
+        }
+      </select>
+
+      <button class="btn-refresh" (click)="getNewRandomJoke()">
+        Get Random Joke 🎲
+      </button>
+    </div>
+  </section>
+
+  <div class="main-layout">
+
+    <main class="content-area">
+      
+      @if (isLoading) {
+        <div class="loader">Loading amazing facts...</div>
+      }
+
+      @if (!isLoading && jokes.length > 0) {
+        <div class="grid">
+          @for (joke of jokes; track joke.id) {
+            <div class="card">
+              <div class="card-header">
+                <div class="emoji-icon">
+                  {{ getCategoryEmoji(joke.categories) }}
+                </div>
+                
+                @if (joke.categories.length) {
+                  <span class="badge">{{ joke.categories[0] }}</span>
+                } @else {
+                  <span class="badge default">Classic</span>
+                }
+              </div>
+
+              <p class="joke-text">{{ joke.value }}</p>
+
+              <div class="card-footer">
+                <small>{{ joke.created_at | date:'mediumDate' }}</small>
+                <button (click)="toggleFav(joke)" [class.active]="isFav(joke)" class="btn-fav">
+                  {{ isFav(joke) ? '❤️ Saved' : '🤍 Save' }}
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      @if (!isLoading && jokes.length === 0) {
+        <div class="empty-state">
+          <p>No jokes found via Chuck Norris satellite.</p>
+        </div>
+      }
+
+      <hr class="divider">
+
+      <section class="favorites-section">
+        <h2>My Collections</h2>
+        @if ((favorites$ | async)?.length === 0) {
+          <p class="empty-text">No favorites saved yet.</p>
+        }
+        <div class="grid">
+          @for (fav of favorites$ | async; track fav.id) {
+            <div class="card mini">
+              <div class="card-header-mini">
+                <span class="emoji-small">{{ getCategoryEmoji(fav.categories) }}</span>
+                <button (click)="toggleFav(fav)" class="btn-delete">🗑️</button>
+              </div>
+              <p>{{ fav.value }}</p>
+            </div>
+          }
+        </div>
+      </section>
+
+    </main>
+
+    <aside class="history-sidebar">
+      <h3>Session History</h3>
+      <ul class="history-list">
+        @for (log of history$ | async; track log.id) {
+          <li class="history-item">
+            <span class="emoji">{{ getCategoryEmoji(log.categories) }}</span>
+            <span class="truncate" title="{{ log.value }}">{{ log.value | slice:0:30 }}...</span>
+          </li>
+        }
+      </ul>
+    </aside>
+
+  </div>
+</div>

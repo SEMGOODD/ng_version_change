@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { Component, OnInit, Input, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GameService } from '../services/game.service';
@@ -10,7 +10,7 @@ import { GameService } from '../services/game.service';
   templateUrl: './memory-card.component.html',
   styleUrls: ['./memory-card.component.scss']
 })
-export class MemoryCardComponent implements OnInit, DoCheck {
+export class MemoryCardComponent implements OnInit, OnChanges {
 
   constructor(private gameService: GameService) { }
 
@@ -19,27 +19,27 @@ export class MemoryCardComponent implements OnInit, DoCheck {
   @Input() id!: number;
 
   icon: string[] = []; 
-  
   isRotated: boolean = false;
 
   ngOnInit(): void {
-    this.icon = [this.type, this.code]; 
+      this.gameService.getCoveredCards().subscribe(r => {
+        r.forEach(v => {
+          if (v.id === this.id) {
+            this.isRotated = false;
+          }
+        });
+      });
+    }
 
-    this.gameService.getCoveredCards().subscribe(r => 
-      r.map(v => this.isRotated = (v.id == this.id) ? false : this.isRotated)
-    );
-  }
-
-  ngDoCheck(): void {
-    this.icon = [this.type, this.code];
-  }
-
-  undo() {
-    this.isRotated = false;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['code'] || changes['type']) {
+      this.icon = [this.type, this.code];
+      this.isRotated = false;
+    }
   }
 
   onClick() {
-    if (!this.isRotated) { 
+    if (!this.isRotated) {
       this.isRotated = true;
       this.gameService.controlCards({ id: this.id, code: this.code, type: this.type });
     }

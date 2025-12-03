@@ -12,17 +12,20 @@ import { GameService } from '../services/game.service';
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    MatToolbarModule, 
-    MatButtonModule, 
-    MatIconModule, 
-    RouterLink, 
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterLink,
     RouterLinkActive,
-    AsyncPipe 
+    AsyncPipe
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+
+  private gameService = inject(GameService);
+  private router = inject(Router);
 
   public remainingCardPairs$: Observable<number>;
   public doneMoves$: Observable<number>;
@@ -30,12 +33,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public isOnGamePage: boolean = false;
   private routerSub: Subscription;
 
-  constructor(
-    private router: Router,
-    private gameService: GameService 
-  ) { }
-
   ngOnInit(): void {
+    this.remainingCardPairs$ = this.gameService.getRemainingCardPairs();
+    this.doneMoves$ = this.gameService.getDoneMoves();
+
     this.routerSub = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
@@ -52,7 +53,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   resetGame(): void {
-    // Cette fonction appellera le service pour réinitialiser le jeu
-    // this.gameService.initGame(); 
+    window.location.reload(); 
   }
 }

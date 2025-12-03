@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MemoryCardComponent } from '../memory-card/memory-card.component'; 
 import { GameService } from '../services/game.service';
-import { Card } from '../card';
+import { Card } from 'src/app/card';
 
 @Component({
   selector: 'app-board',

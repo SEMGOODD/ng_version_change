@@ -1,0 +1,253 @@
+/* --- VARIABLES & THEME --- */
+:root {
+  --primary: #f15a24;       /* Chuck Orange */
+  --primary-hover: #d1400e;
+  --secondary: #2d3436;     /* Dark Gray for text */
+  --bg-color: #f0f2f5;      /* Very light gray background */
+  --card-bg: #ffffff;
+  --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.05); /* Ombre moderne */
+  --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.1);
+  --radius-lg: 24px;        /* Gros arrondis */
+  --radius-md: 12px;
+}
+
+/* --- RESET & LAYOUT GLOBAL --- */
+.container {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  padding: 2rem 5%; /* Marges sur les côtés */
+  color: var(--secondary);
+}
+
+/* --- 1. HEADER --- */
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  background: var(--card-bg);
+  padding: 1rem 2rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+.top-header h1 {
+  font-weight: 800;
+  font-size: 1.8rem;
+  background: linear-gradient(45deg, var(--primary), #ff9f43);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+/* User Bar & Login */
+.user-bar {
+  display: flex;
+  align-items: center;
+}
+
+.login-form, .user-profile {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.user-profile .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+}
+
+/* --- 2. INPUTS & BUTTONS MODERNES --- */
+input, select {
+  padding: 12px 20px;
+  border: 2px solid transparent;
+  background: #f8f9fa;
+  border-radius: 50px; /* Forme pilule */
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+input:focus, select:focus {
+  background: white;
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(241, 90, 36, 0.1);
+}
+
+button {
+  padding: 12px 24px;
+  border-radius: 50px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:active { transform: scale(0.95); }
+
+.btn-refresh {
+  background: linear-gradient(135deg, var(--primary), #ff7e5f);
+  color: rgb(179, 165, 165);
+  box-shadow: 0 4px 15px rgba(241, 90, 36, 0.3);
+}
+
+.btn-refresh:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(241, 90, 36, 0.4);
+}
+
+/* --- 3. CONTROLS PANEL (Centré) --- */
+.controls-panel {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  background: var(--card-bg);
+  padding: 10px;
+  border-radius: 50px; /* Barre flottante */
+  box-shadow: var(--shadow-soft);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-box {
+  display: flex;
+  gap: 5px;
+}
+
+/* --- 4. GRID & CARDS --- */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px; /* Sidebar fixe à droite */
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Carte Principale (La Blague) */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.02);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.emoji-icon {
+  font-size: 3.5rem;
+  background: #fff5f0;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+.badge {
+  background: var(--secondary);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 800;
+}
+
+.joke-text {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: var(--secondary);
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f0f0f0;
+  color: #888;
+}
+
+.btn-fav {
+  background: #f0f2f5;
+  color: #555;
+}
+
+.btn-fav.active {
+  background: #ffecec;
+  color: red;
+}
+
+/* --- 5. SIDEBAR & FAVORITES --- */
+.history-sidebar, .favorites-section {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.history-sidebar h3, .favorites-section h2 {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.history-item, .card.mini {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #f9f9f9;
+  border-radius: var(--radius-md);
+  transition: background 0.2s;
+}
+
+.history-item:hover {
+  background: #fff5f0;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .main-layout { grid-template-columns: 1fr; }
+  .actions { flex-direction: column; width: 100%; }
+  .top-header { flex-direction: column; gap: 1rem; }
+}

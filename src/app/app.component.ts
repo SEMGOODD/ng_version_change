@@ -1,19 +1,27 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { icons } from "./icons";
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NavbarComponent, RouterOutlet, FontAwesomeModule],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatToolbarModule, MatButtonModule],
+  template: `
+    <mat-toolbar color="accent">
+      <span>Welcome to our super multi game platform</span>
+      <span class="spacer" style="flex: 1 1 auto;"></span>
+      
+      <a mat-button routerLink="/memory" routerLinkActive="active">Jeu de Mémoire</a>
+      <a mat-button routerLink="/blagues" routerLinkActive="active">Blagues</a>
+    </mat-toolbar>
+
+    <div style="padding: 20px;">
+      <router-outlet></router-outlet>
+    </div>
+  `,
+  styles: [`
+    .active { background: rgba(255,255,255, 0.2); }
+  `]
 })
-export class AppComponent {
-  title = 'memory-game';
-  constructor(library: FaIconLibrary) {
-    library.addIcons(...icons);
-  }
-}
+export class AppComponent {}

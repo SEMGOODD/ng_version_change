@@ -1,14 +1,33 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { GameComponent } from './pages/game/game.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'game', component: GameComponent },
-  { path: 'not-found', component: NotFoundComponent },
-  { path: '**', redirectTo: '/not-found' }
+  { path: '', redirectTo: 'memory', pathMatch: 'full' },
+  
+  { 
+    path: 'memory', 
+    loadComponent: () => import('./memory-game/memory-layout.component').then(m => m.MemoryLayoutComponent),
+    children: [
+        { path: '', redirectTo: 'home', pathMatch: 'full' },
+        { 
+            path: 'home', 
+            loadComponent: () => import('./memory-game/pages/home/home.component').then(m => m.HomeComponent) 
+        },
+        { 
+            path: 'game', 
+            loadComponent: () => import('./memory-game/pages/game/game.component').then(m => m.GameComponent) 
+        },
+        { 
+            path: 'profile', 
+            loadComponent: () => import('./memory-game/pages/profile/profile.component').then(m => m.ProfileComponent) 
+        }
+    ]
+  },
+
+  { 
+    path: 'blagues', 
+    loadComponent: () => import('src/app/blagues/components/joke-list/joke-list')
+      .then(m => m.JokeListComponent)
+  },
+
+  { path: '**', redirectTo: 'memory' }
 ];
